@@ -66,3 +66,44 @@ factor(pull(prob1_df, norm_samp_pos)) * pull(prob1_df, norm_samp)
 as.numeric(factor(pull(prob1_df, norm_samp_pos))) * pull(prob1_df, norm_samp)
 ```
 
+
+
+# Problem 2
+
+```{r}
+# Create the dataframe
+prob2_df <- tibble(
+  x = rnorm(500),
+  y = rnorm(500),
+  vec_log = x + y > 1,
+  vec_num = as.numeric(vec_log),
+  vec_fac = factor(vec_log)
+)
+```
+
+The above dataframe (prob2_df) has `r nrow(prob2_df)` rows and `r ncol(prob2_df) ` columns. The mean of x is `r mean(pull(prob2_df, x))`. The median of x is `r median(pull(prob2_df, x))`. The standard deviation of x is `r sd(pull(prob2_df, x))`. In addition, the proportion of cases in which x + y > 1 is `r sum(pull(prob2_df, vec_log)) / length(pull(prob2_df, vec_log))`.
+
+```{r}
+# Scatterplot of y vs x by vec_log from prob2_df
+scat_plot_log <- ggplot(prob2_df, aes(x = x, y = y, color = vec_log)) +
+  geom_point()
+
+# Scatterplot of y vs x by vec_num from prob2_df
+scat_plot_num <- ggplot(prob2_df, aes(x = x, y = y, color = vec_num)) +
+  geom_point()
+
+# The color scale in the above plot is a sliding scale from blue (vec_num = 1) to black (vec_num = 0), 
+# but there are only two distinct colors because vec_num only has two values (0 and 1).
+
+# Scatterplot of y vs x by vec_fac from prob2_df
+scat_plot_fac <- ggplot(prob2_df, aes(x = x, y = y, color = vec_fac)) +
+  geom_point()
+
+# The color scale in the above plot is the same as when coloring by the logical vector. The factor 
+# vector only has two values (True or False).
+
+# Export the first scatterplot
+ggsave("scatter_plot_log.png", plot = scat_plot_log)
+
+```
+
