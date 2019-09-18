@@ -16,7 +16,7 @@ library(tidyverse)
 ```{r}
 # Create first dataframe
 prob1_df <- tibble(
-  norm_samp = rnorm(8, mean = 8),
+  norm_samp = rnorm(8),
   norm_samp_pos = norm_samp > 0,
   vec_char = c("a", "b", "c", "d", "e", "f", "g", "h"),
   vec_factor = factor(c("burrito", "quesadilla", "tacos", "burrito", "burrito", "tacos", "tacos", "tacos"))
@@ -50,7 +50,7 @@ as.numeric(pull(prob1_df, vec_char))
 as.numeric(pull(prob1_df, vec_factor))
 ```
 
-In the logical vector, all the "TRUE"s were converted into 1's. In both the character and factor vector, everything was converted to "NA". This explains how we were able to calculate a mean for the logical vector, but not the character or factor vector.
+In the logical vector, all the "TRUE"s were converted into 1's. In the character vector, everything was converted to "NA". In the factor vector, the factors were converted to their numerical levels. This explains how we were able to calculate a mean for the logical vector and factor vector, but not the character.
 
 
 
@@ -88,9 +88,15 @@ The above dataframe (prob2_df) has `r nrow(prob2_df)` rows and `r ncol(prob2_df)
 scat_plot_log <- ggplot(prob2_df, aes(x = x, y = y, color = vec_log)) +
   geom_point()
 
+# View scatterplot
+scat_plot_log
+
 # Scatterplot of y vs x by vec_num from prob2_df
 scat_plot_num <- ggplot(prob2_df, aes(x = x, y = y, color = vec_num)) +
   geom_point()
+
+# View scatterplot
+scat_plot_num
 
 # The color scale in the above plot is a sliding scale from blue (vec_num = 1) to black (vec_num = 0), 
 # but there are only two distinct colors because vec_num only has two values (0 and 1).
@@ -98,6 +104,9 @@ scat_plot_num <- ggplot(prob2_df, aes(x = x, y = y, color = vec_num)) +
 # Scatterplot of y vs x by vec_fac from prob2_df
 scat_plot_fac <- ggplot(prob2_df, aes(x = x, y = y, color = vec_fac)) +
   geom_point()
+
+# View scatterplot
+scat_plot_fac
 
 # The color scale in the above plot is the same as when coloring by the logical vector. The factor 
 # vector only has two values (True or False).
